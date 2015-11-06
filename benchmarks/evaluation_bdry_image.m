@@ -45,6 +45,7 @@ function [thresh,cntR,sumR,cntP,sumP] = evaluation_bdry_image(inFile,gtFile, prF
         clear ucm2;
     elseif ~exist('segs', 'var')
         pb = double(imread(inFile))/255;
+        pb = pb / max(pb(:));
     end;
 
 
@@ -70,7 +71,6 @@ function [thresh,cntR,sumR,cntP,sumP] = evaluation_bdry_image(inFile,gtFile, prF
     sumP = zeros(size(thresh));
 
     for t = 1:nthresh
-
         if ~exist('segs', 'var')
             bmap = (pb>=thresh(t));
         else

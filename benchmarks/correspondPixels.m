@@ -42,3 +42,6 @@
 %
 % David Martin <dmartin@eecs.berkeley.edu>
 % January 2003
+
+function varargout = correspondPixels(varargin)
+error('MEX file not created -- run build.m')
