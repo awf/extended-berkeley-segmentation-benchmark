@@ -23,6 +23,12 @@
 #include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
+#include <cstdint>
+
+using std::int32_t;
+typedef std::uint16_t u_int16_t;
+typedef std::uint32_t u_int32_t;
+typedef std::uint64_t u_int64_t;
 
 // All random numbers are generated from a single seed.  This is true
 // even when private random streams (seperate from the global
@@ -32,6 +38,9 @@
 // can be replayed.
 
 // If seed==0, then the seed is generated from the system clock.
+
+
+#include <random>
 
 class Random
 {
@@ -84,6 +93,9 @@ protected:
     // The current state for this random stream.
     u_int16_t 	_xsubi[3];
 
+    std::mt19937 engine;
+    std::uniform_real_distribution<double> dist;
+
 };
 
 inline u_int32_t 
@@ -96,8 +108,8 @@ inline u_int32_t
 Random::ui32 (u_int32_t a, u_int32_t b)
 {
     assert (a <= b);
-    double x = fp ();
-    return (u_int32_t) floor (x * ((double)b - (double)a + 1) + a);
+    std::uniform_int_distribution<u_int32_t> dist(a,b);
+    return dist(engine);
 }
 
 inline int32_t 
@@ -117,14 +129,14 @@ Random::i32 (int32_t a, int32_t b)
 inline double 
 Random::fp ()
 {
-    return erand48 (_xsubi);
+  return dist(engine);
 }
 
 inline double 
 Random::fp (double a, double b)
 {
     assert (a < b);
-    return erand48 (_xsubi) * (b - a) + a;
+    return fp() * (b - a) + a;
 }
 
 #endif // __Random_hh__

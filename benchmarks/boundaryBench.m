@@ -35,14 +35,19 @@ function boundaryBench(imgDir, gtDir, pbDir, outDir, nthresh, maxDist, thinpb)
 
     iids = dir(fullfile(imgDir,'*.jpg'));
     for i = 1:numel(iids),
+      au_progressbar_ascii('boundary', i/numel(iids))
         evFile = fullfile(outDir, strcat(iids(i).name(1:end-4),'_ev1.txt'));
         if exist('evFile','file')
             continue;
         end;
 
-        inFile = fullfile(pbDir, strcat(iids(i).name(1:end-4),'.mat'));
+        base = iids(i).name(1:end-4);
+        inFile = fullfile(pbDir, strcat(base,'.mat'));
         if ~exist(inFile,'file'),
-            inFile = fullfile(pbDir, strcat(iids(i).name(1:end-4),'.png'));
+            inFile = fullfile(pbDir, strcat(base,'.png'));
+            if ~exist(inFile,'file'),
+              inFile = fullfile(pbDir, [base '/' base '.bmp']);
+            end
         end
 
         gtFile = fullfile(gtDir, strcat(iids(i).name(1:end-4),'.mat'));

@@ -17,7 +17,7 @@
 // Set to 1 or 0.  Controlls if the nextpow2 methods get defined,
 // which depend on having the ieeefp.h header file.
 
-#ifdef __APPLE__
+#if defined(__APPLE__) || defined(_WIN32)
 #define NEXTPOW2 0
 #else
 #define NEXTPOW2 1

@@ -19,10 +19,10 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 // 02111-1307, USA, or see http://www.gnu.org/copyleft/gpl.html.
 
-#include <sys/times.h>
-#include <sys/time.h>
+//#include <sys/times.h>
+//#include <sys/time.h>
 #include <time.h>
-#include <unistd.h>
+//#include <unistd.h>
 #include <assert.h>
 
 class Timer
@@ -55,12 +55,12 @@ private:
 
     State _state;
   
-    struct timeval _elapsed_start;
-    struct timeval _elapsed_stop;
+//    struct timeval _elapsed_start;
+//    struct timeval _elapsed_stop;
     double _elapsed;
 
-    struct tms _cpu_start;
-    struct tms _cpu_stop;
+ //   struct tms _cpu_start;
+ //   struct tms _cpu_stop;
     double _user;
     double _system;
 };
@@ -86,17 +86,17 @@ Timer::start ()
 {
     assert (_state == stopped);
     _state = running;
-    gettimeofday (&_elapsed_start, NULL);
-    times (&_cpu_start);
+ //   gettimeofday (&_elapsed_start, NULL);
+ //   times (&_cpu_start);
 }
 
 void
 Timer::stop ()
 {
     assert (_state == running);
-    gettimeofday (&_elapsed_stop, NULL);
-    times (&_cpu_stop);
-    _compute ();
+ //   gettimeofday (&_elapsed_stop, NULL);
+ //   times (&_cpu_stop);
+ //   _compute ();
    _state = stopped;
 }
 

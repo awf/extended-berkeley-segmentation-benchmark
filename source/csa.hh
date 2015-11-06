@@ -15,7 +15,7 @@
 #include <malloc.h>
 #endif
 #include <sys/types.h>
-#include <sys/times.h>
+//#include <sys/times.h>
 
 // NOTE: This code has been tested with the following options only:
 #define QUICK_MIN
@@ -514,7 +514,7 @@ if (v->matched)
   }
 else
   (void) printf("unmatched\n");
-(void) printf("\t%d arcs priced out, %d arcs priced in\n",
+(void) printf("\t%lld arcs priced out, %lld arcs priced in\n",
 	      v->first - v->priced_out, (v+1)->priced_out - v->first);
 if ((v+1)->priced_out - v->first > 0)
   {
@@ -609,7 +609,7 @@ if (v->matched)
     {
     if (a->c - a->head->p - match_rc < -epsilon * 1.01)
       {
-      (void) printf("Violated epsilon optimality: c(%d, %d)=%lg; matched to %d; eps=%lg\n",
+      (void) printf("Violated epsilon optimality: c(%lld, %lld)=%lg; matched to %lld; eps=%lg\n",
 		    v - head_lhs_node + 1,
 		    a->head - head_rhs_node + 1,
 		    a->c - a->head->p - match_rc,
@@ -1245,10 +1245,11 @@ void st_destroy(stack s)
 unsigned	myclock()
 
 {
-struct tms hold;
-
-(void) times(&hold);
-return(hold.tms_utime);
+// struct tms hold;
+// 
+// (void) times(&hold);
+//return(hold.tms_utime);
+  return 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////

@@ -1,6 +1,5 @@
 
-#include <sys/time.h>
-#include <unistd.h>
+//#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -27,7 +26,8 @@
 
 Random Random::rand;
 
-Random::Random ()
+Random::Random ():
+  dist(0,1)
 {
     reseed (0);
 }
@@ -55,12 +55,16 @@ void
 Random::reseed (u_int64_t seed)
 {
     if (seed == 0) {
+#ifdef _WIN32
+      seed = 7;
+#else
 	struct timeval t;
 	gettimeofday (&t, NULL);
 	u_int64_t a = (t.tv_usec >> 3) & 0xffff;
 	u_int64_t b = t.tv_sec & 0xffff;
 	u_int64_t c = (t.tv_sec >> 16) & 0xffff;
 	seed = a | (b << 16) | (c << 32);
+#endif
     }
     _init (seed);
 }
@@ -68,9 +72,6 @@ Random::reseed (u_int64_t seed)
 void
 Random::_init (u_int64_t seed)
 {
-    _seed = seed & 0xffffffffffffull;
-    _xsubi[0] = (seed >>  0) & 0xffff;
-    _xsubi[1] = (seed >> 16) & 0xffff;
-    _xsubi[2] = (seed >> 32) & 0xffff;
+  engine.seed(seed);
 }
 

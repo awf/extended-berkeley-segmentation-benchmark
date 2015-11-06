@@ -2,10 +2,13 @@
 #include "Random.hh"
 #include "kofn.hh"
 
+#include <mex.h>
+
 // O(n) implementation.
 static void
 _kOfN_largeK (int k, int n, int* values)
 {
+//  mexPrintf("KofN_large(%d,%d)\n", k, n);
     assert (k > 0);
     assert (k <= n);
     int j = 0;
@@ -25,6 +28,7 @@ _kOfN_largeK (int k, int n, int* values)
 static void
 _kOfN_smallK (int k, int n, int* values)
 {
+//  mexPrintf("KofN_small(%d,%d)\n", k, n);
     assert (k > 0);
     assert (k <= n);
     if (k == 1) {
@@ -55,6 +59,7 @@ _kOfN_smallK (int k, int n, int* values)
 void
 kOfN (int k, int n, int* values)
 {
+//  mexPrintf("KofN(%d,%d)\n", k, n);
     assert (k >= 0);
     assert (n >= 0);
     if (k == 0) { return; }

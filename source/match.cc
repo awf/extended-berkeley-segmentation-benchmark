@@ -11,6 +11,8 @@
 #include "match.hh"
 #include "Timer.hh"
 
+#include <mex.h>
+
 struct Edge {
     int i,j;	// node ids, 0-based
     double w;	// distance between pixels

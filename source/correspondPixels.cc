@@ -1,5 +1,6 @@
 
-#include <string.h>
+#include <cstring>
+
 #include <mex.h>
 #include "Matrix.hh"
 #include "csa.hh"

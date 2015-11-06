@@ -26,6 +26,7 @@ typedef unsigned long long uint64;
 void
 Timer::_compute ()
 {
+#if 0
     // Compute elapsed time.
     long sec = _elapsed_stop.tv_sec - _elapsed_start.tv_sec;
     long usec = _elapsed_stop.tv_usec - _elapsed_start.tv_usec;
@@ -40,6 +41,7 @@ Timer::_compute ()
              / sysconf(_SC_CLK_TCK);
     _system += (double) (_cpu_stop.tms_stime - _cpu_start.tms_stime) 
                / sysconf(_SC_CLK_TCK);
+#endif
 }
 
 // Convert time in seconds into a nice human-friendly format: h:mm:ss.ss

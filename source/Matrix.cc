@@ -1,4 +1,6 @@
 
+#define _USE_MATH_DEFINES
+
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
@@ -12,6 +14,12 @@
 #if NEXTPOW2
 #include <ieee754.h>
 #endif // NEXTPOW2
+
+#ifdef _WIN32
+#define __STRING(OP) #OP
+#endif
+
+using std::isnan;
 
 // TODO: 
 // - File I/O
@@ -1436,12 +1444,13 @@ izinf (const Matrix& a)
     return b;
 }
 
+
 Matrix 
 izfinite (const Matrix& a)
 {
     Matrix b (a._rows, a._cols, Matrix::undef);
     for (int i = 0; i < a._n; i++) {
-        b._data[i] = ::finite(a._data[i]);
+        b._data[i] = std::isfinite(a._data[i]);
     }
     return b;
 }
@@ -1466,7 +1475,7 @@ void
 Matrix::izfinite ()
 {
     for (int i = 0; i < _n; i++) {
-        _data[i] = ::finite(_data[i]);
+        _data[i] = std::isfinite(_data[i]);
     }
 }
 
@@ -2057,7 +2066,7 @@ acoth (const Matrix& a)
     } \
     Matrix& Matrix::operator OP (const Matrix& that) { \
 	if (_rows != _rows || _cols != that._cols) { \
-            throw Exception (String ( \
+            throw Exception(String ( \
                 "Matrix size mismatch in operation '%s': " \
 		"(%d,%d) vs. (%d,%d).", \
                 __STRING(OP), _rows, _cols, that._rows, that._cols)); \
